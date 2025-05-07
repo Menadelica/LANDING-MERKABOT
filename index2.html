@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Merkabot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="shortcut icon" href="./img/logotranspa.png" type="image/x-icon">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif; /* Fuente moderna sin serifas */
+      background-color: #f4f6f8; /* Fondo suave gris claro */
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card {
+      background-color: white;
+      padding: 30px;
+      margin: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para tarjetas */
+      max-width: 800px;
+      width: 90%;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    header {
+      background-color: #197849;
+      color: white;
+      width: 100%;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      font-weight: 700;
+    }
+
+    .benefits-section {
+      background-color: white;
+      padding: 40px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      width: 90%;
+      max-width: 1200px;
+      text-align: center;
+    }
+
+    .benefit {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .benefit:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .button {
+      background-color: #f7941d;
+      color: white;
+      border: none;
+      padding: 20px 40px;
+      font-size: 1.5em;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .button:hover {
+      background-color: #d67404;
+      transform: scale(1.05);
+    }
+
+    iframe {
+      width: 100%;
+      max-width: 800px;
+      height: 315px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+    }
+
+    .card h1 {
+  font-size: 60px; /* Aumenta el tamaño de la fuente */
+  font-weight: bold; /* Texto en negrita */
+  text-align: center; /* Centrado */
+  margin: 20px 0; /* Espaciado generoso */
+  color: #197849; /* Color verde que combina con la página */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+}
+
+
+    .whatsapp-icon {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      width: 56px; /* Tamaño más grande */
+      height: 56px; /* Tamaño más grande */
+      background-color: #25D366; /* Fondo verde de WhatsApp */
+      border-radius: 50%;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para hover */
+    }
+
+    .whatsapp-icon:hover {
+      transform: scale(1.1); /* Efecto de agrandamiento */
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    }
+
+    .whatsapp-icon img {
+      width: 28px; /* Ajuste del tamaño del ícono */
+      height: 28px; /* Ajuste del tamaño del ícono */
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+  <header class="bg-green-700 text-white shadow-md">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center">
+        <img src="./img/logotranspa.png" alt="Logo Merkabot" class="h-16 w-16 md:h-20 md:w-20 mr-3">
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-wide" style="font-family: 'Poppins', sans-serif;">Merkabot</h1>
+      </div>
+      <nav class="hidden md:flex space-x-6">
+        <a href="#" class="text-white hover:text-gray-200">Inicio</a>
+        <a href="#" class="text-white hover:text-gray-200">Características</a>
+        <a href="#" class="text-white hover:text-gray-200">Contacto</a>
+      </nav>
+      <button class="md:hidden text-white focus:outline-none">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="card">
+    <h1>Bienvenido a Merkabot</h1>
+    <button class="button">Ingresar</button>
+  </div>
+
+  <h3 class="text-3xl font-bold mb-8" style="color: #197849; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">Descubre cómo funciona</h3>
+  <div class="card bg-white rounded-lg shadow-md p-6 mt-6">
+    <div class="relative">
+      <img src="./img/robot.jpg" alt="Previsualización del video" class="w-full h-auto object-cover cursor-pointer" onclick="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white bg-black bg-opacity-50 rounded-full p-2" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 22v-20l18 10-18 10z" />
+        </svg>
+      </div>
+      <iframe src="https://www.youtube.com/embed/L4tVqf5hcz0" title="Descubre cómo funciona" class="w-full rounded-lg" style="height: 315px; border: none; display: none;"></iframe>
+    </div>
+  </div>
+
+  <section class="benefits-section py-10 bg-gray-100">
+    <div class="container mx-auto px-4">
+      <h3 class="text-2xl font-bold text-center mb-8">Beneficios de usar Merkabot</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="benefit text-center p-6 rounded-lg shadow-md" style="background-color: rgba(25, 120, 73, 0.8); color: white;">
+          <i class="fas fa-shopping-cart text-4xl text-white mb-4"></i>
+          <h4 class="text-xl font-semibold mb-2">Compras rápidas</h4>
+          <p class="text-white">Realiza tus compras en minutos con nuestra interfaz intuitiva.</p>
+        </div>
+        <div class="benefit text-center p-6 rounded-lg shadow-md" style="background-color: rgba(247, 148, 29, 0.8); color: white;">
+          <i class="fas fa-truck text-4xl text-white mb-4"></i>
+          <h4 class="text-xl font-semibold mb-2">Entrega a domicilio</h4>
+          <p class="text-white">Recibe tus productos directamente en la puerta de tu casa.</p>
+        </div>
+        <div class="benefit text-center p-6 rounded-lg shadow-md" style="background-color: rgba(255, 193, 7, 0.8); color: white;">
+          <i class="fas fa-tags text-4xl text-white mb-4"></i>
+          <h4 class="text-xl font-semibold mb-2">Ofertas exclusivas</h4>
+          <p class="text-white">Aprovecha descuentos y promociones solo para usuarios de Merkabot.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <a href="https://wa.me/573238818035" target="_blank" class="whatsapp-icon">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  </a>
+
+</body>
+</html>
