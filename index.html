@@ -5,179 +5,168 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Merkabot</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
   <link rel="shortcut icon" href="./img/logotranspa.png" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
   <style>
+    @keyframes moveRobot {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes blink {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes waveHand {
+      0%, 100% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(20deg);
+      }
+    }
+
+    .robot {
+      animation: moveRobot 2s infinite;
+      position: relative;
+    }
+
+    .robot-eye {
+      display: none; /* Oculta el punto negro destellante */
+    }
+
+    .robot-hand {
+      position: absolute;
+      top: 20%;
+      right: -10%; /* Ajuste para que la mano esté visible */
+      width: 30px;
+      height: 60px;
+      background-color: #197849;
+      border-radius: 10px;
+      transform-origin: top right;
+      animation: waveHand 1.5s infinite ease-in-out; /* Animación más fluida */
+    }
+
     body {
-      font-family: 'Poppins', sans-serif; /* Fuente moderna sin serifas */
-      background-color: #f4f6f8; /* Fondo suave gris claro */
-      color: #333;
+      background: linear-gradient(to bottom, #e8f5e9 70%, #ffffff 30%); /* Verde muy clarito combinado con blanco */
       margin: 0;
       padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      font-family: 'Poppins', sans-serif;
     }
 
-    .card {
-      background-color: white;
-      padding: 30px;
-      margin: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para tarjetas */
-      max-width: 800px;
-      width: 90%;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    header {
-      background-color: #197849;
-      color: white;
+    .curvilinea {
+      position: absolute;
+      top: 70%;
+      left: 0;
       width: 100%;
-      padding: 20px 0;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-    header h1 {
-      font-size: 2.5em;
-      font-weight: 700;
-    }
-
-    .benefits-section {
-      background-color: white;
-      padding: 40px 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      margin: 20px;
-      width: 90%;
-      max-width: 1200px;
-      text-align: center;
-    }
-
-    .benefit {
-      background-color: #f9f9f9;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .benefit:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .button {
-      background-color: #f7941d;
-      color: white;
-      border: none;
-      padding: 20px 40px;
-      font-size: 1.5em;
-      font-weight: bold;
-      border-radius: 10px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .button:hover {
-      background-color: #d67404;
-      transform: scale(1.05);
-    }
-
-    iframe {
-      width: 100%;
-      max-width: 800px;
-      height: 315px;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      margin-top: 20px;
-    }
-
-    .card h1 {
-  font-size: 60px; /* Aumenta el tamaño de la fuente */
-  font-weight: bold; /* Texto en negrita */
-  text-align: center; /* Centrado */
-  margin: 20px 0; /* Espaciado generoso */
-  color: #197849; /* Color verde que combina con la página */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-}
-
-
-    .whatsapp-icon {
-      position: fixed;
-      bottom: 16px;
-      right: 16px;
-      width: 56px; /* Tamaño más grande */
-      height: 56px; /* Tamaño más grande */
-      background-color: #25D366; /* Fondo verde de WhatsApp */
-      border-radius: 50%;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para hover */
-    }
-
-    .whatsapp-icon:hover {
-      transform: scale(1.1); /* Efecto de agrandamiento */
-      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
-    }
-
-    .whatsapp-icon img {
-      width: 28px; /* Ajuste del tamaño del ícono */
-      height: 28px; /* Ajuste del tamaño del ícono */
+      height: 30%;
+      background: #a5d6a7; /* Verde más oscuro que combina */
+      clip-path: ellipse(150% 100% at 50% 0%);
     }
   </style>
-  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
+
+  <div class="curvilinea"></div>
 
   <header class="bg-green-700 text-white shadow-md">
     <div class="container mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center">
-        <img src="./img/logotranspa.png" alt="Logo Merkabot" class="h-16 w-16 md:h-20 md:w-20 mr-3">
-        <h1 class="text-3xl md:text-5xl font-extrabold tracking-wide" style="font-family: 'Poppins', sans-serif;">Merkabot</h1>
+        <img src="./img/MERKABOT.PNG" alt="Logo Merkabot" class="w-32 md:w-40 lg:w-48 h-auto md:h-auto lg:h-auto">
       </div>
-      <nav class="hidden md:flex space-x-6">
-        <a href="#" class="text-white hover:text-gray-200">Inicio</a>
-        <a href="#" class="text-white hover:text-gray-200">Características</a>
-        <a href="#" class="text-white hover:text-gray-200">Contacto</a>
-      </nav>
+      <div class="flex items-center space-x-4 ml-auto">
+        <a href="https://www.instagram.com" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="h-8 w-8">
+        </a>
+        <a href="https://www.facebook.com" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" class="h-8 w-8">
+        </a>
+        <a href="https://www.youtube.com" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube" class="h-8 w-8">
+        </a>
+      </div>
       <button class="md:hidden text-white focus:outline-none">
         <i class="fas fa-bars"></i>
       </button>
     </div>
   </header>
 
-  <div class="card">
-    <h1>Bienvenido a Merkabot</h1>
-    <button class="button">Ingresar</button>
-  </div>
-
-  <h3 class="text-3xl font-bold mb-8" style="color: #197849; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);">Descubre cómo funciona</h3>
-  <div class="card bg-white rounded-lg shadow-md p-6 mt-6">
-    <div class="relative">
-      <img src="./img/robot.jpg" alt="Previsualización del video" class="w-full h-auto object-cover cursor-pointer" onclick="this.style.display='none'; this.nextElementSibling.style.display='block';">
-      <div class="absolute inset-0 flex items-center justify-center">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-white bg-black bg-opacity-50 rounded-full p-2" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M3 22v-20l18 10-18 10z" />
-        </svg>
-      </div>
-      <iframe src="https://www.youtube.com/embed/L4tVqf5hcz0" title="Descubre cómo funciona" class="w-full rounded-lg" style="height: 315px; border: none; display: none;"></iframe>
+  <div class="card grid grid-cols-1 md:grid-cols-2 items-center" style="color: white;">
+    <div class="flex flex-col items-center md:items-start">
+      <h1 class="text-center md:text-left">Bienvenido a Merkabot</h1>
+      <p class="text-lg font-medium text-black mt-4">Explora la forma más fácil y rápida de hacer tus compras.</p>
+      <button class="button mt-4">Ingresar</button>
+    </div>
+    <div class="flex justify-start md:justify-start"> <!-- Cambié justify-end a justify-start -->
+      <img src="./img/MERKABOTROBOT.PNG" alt="Logo Merkabot Robot" class="robot w-20 md:w-28 lg:w-32 h-auto md:h-auto lg:h-auto">
     </div>
   </div>
+
+  <p class="text-2xl font-bold mb-16  mt-10">Descubre cómo funciona:</p>
+  <div class="card bg-white rounded-lg shadow-md p-6 mt--100">
+    <div id="carouselExample" class="relative w-full mx-auto overflow-hidden"> <!-- Ajuste para ocupar todo el ancho -->
+      <div class="relative w-full overflow-hidden rounded-lg" style="max-height: 400px;"> <!-- Ajuste de altura máxima -->
+        <div class="carousel-item active">
+          <div class="relative">
+            <img src="./img/robot.jpg" alt="Previsualización del video" class="w-full object-cover" style="height: 400px;" onclick="this.style.display='none'; this.nextElementSibling.style.display='block'; this.nextElementSibling.src=this.nextElementSibling.src;">
+            <iframe src="https://www.youtube.com/embed/L4tVqf5hcz0?enablejsapi=1" class="w-full" style="height: 400px; border: none; display: none;" allowfullscreen></iframe>
+          </div>
+        </div>
+        
+        <div class="carousel-item">
+          <img src="./img/merka6.jpg" class="w-full object-cover" style="height: 400px;" alt="Imagen 3">
+        </div>
+        <div class="carousel-item">
+          <img src="./img/merka5.jpg" class="w-full object-cover" style="height: 400px;" alt="Imagen 4">
+        </div>
+        <div class="carousel-item">
+          <img src="./img/merka3.jpg" class="w-full object-cover" style="height: 400px;" alt="Imagen 5">
+        </div>
+        <div class="carousel-item">
+          <img src="./img/merka2.jpg" class="w-full object-cover" style="height: 400px;" alt="Imagen 6">
+        </div>
+      </div>
+      <button class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full" onclick="prevSlide()">&#10094;</button>
+      <button class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full" onclick="nextSlide()">&#10095;</button>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-item');
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        slide.style.display = i === index ? 'block' : 'none';
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    showSlide(currentSlide);
+
+    // Autoplay functionality
+    setInterval(nextSlide, 3000); // Cambia de imagen cada 3 segundos
+  </script>
 
   <section class="benefits-section py-10 bg-gray-100">
     <div class="container mx-auto px-4">
