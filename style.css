@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'RocherFont';
+    src: url('./font/a.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
     font-family: 'Poppins', sans-serif; /* Fuente moderna sin serifas */
     background-color: #f4f6f8; /* Fondo suave gris claro */
