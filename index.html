@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://use.typekit.net/[YOUR-KIT-CODE].css">
     <link rel="stylesheet" href="style.css">
+    <!-- Sweet Alert 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
@@ -577,6 +581,17 @@
             const ownerName = document.getElementById('ownerName').value;
             const phone = document.getElementById('phone').value;
             
+            // Mostrar loading
+            Swal.fire({
+                title: 'Registrando...',
+                text: 'Por favor espera un momento',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
             try {
                 const response = await fetch('register.php', {
                     method: 'POST',
@@ -593,17 +608,47 @@
                 const data = await response.json();
 
                 if (data.success) {
-                    alert('¡Registro exitoso! Nos pondremos en contacto contigo pronto.');
+                    // Cerrar el modal de registro
                     closeRegistrationModal();
+                    
+                    // Lanzar confeti
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+
+                    // Mostrar mensaje de éxito
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Registro exitoso!',
+                        html: `
+                            <p class="mb-4">Gracias por registrarte en Merkabot.</p>
+                            <p class="text-sm text-gray-600">Pronto nos pondremos en contacto contigo para comenzar a optimizar tu negocio.</p>
+                        `,
+                        confirmButtonText: 'Entendido',
+                        confirmButtonColor: '#10B981'
+                    });
+
                     // Limpiar el formulario
                     document.getElementById('businessName').value = '';
                     document.getElementById('ownerName').value = '';
                     document.getElementById('phone').value = '';
                 } else {
-                    alert('Error al registrar: ' + data.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error al registrar',
+                        text: data.message,
+                        confirmButtonColor: '#EF4444'
+                    });
                 }
             } catch (error) {
-                alert('Error al conectar con el servidor. Por favor, intenta de nuevo más tarde.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de conexión',
+                    text: 'No pudimos conectar con el servidor. Por favor, intenta de nuevo más tarde.',
+                    confirmButtonColor: '#EF4444'
+                });
                 console.error('Error:', error);
             }
         }
