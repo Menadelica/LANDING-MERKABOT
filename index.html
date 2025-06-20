@@ -82,6 +82,35 @@
             font-weight: 400;
             font-style: normal;
         }
+
+        /* Estilos del Slideshow */
+        .slideshow-container {
+            max-width: 100%;
+            position: relative;
+            margin: auto;
+        }
+
+        .slide {
+            display: none;
+            position: relative;
+        }
+
+        .fade {
+            animation: fade 0.5s ease-in-out;
+        }
+
+        @keyframes fade {
+            from {opacity: 0.4}
+            to {opacity: 1}
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .dot.active {
+            background-color: white;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -168,18 +197,56 @@
 
       <!-- Hero Section -->
      <section class="py-16 md:py-24 px-4 md:px-10 bg-gradient-to-b from-green-100 to-green-100">
-        <div class="container mx-auto flex flex-col items-center">
-            <div class="bg-white rounded-xl shadow-lg p-8 max-w-2xl w-full text-center card-hover">
-                <h2 class="text-3xl md:text-4xl font-bold text-green-600 mb-4">Bienvenido a Merkabot</h2>
-                <p class="text-gray-600 text-lg mb-8">Explora la forma más fácil y rápida de hacer tus compras.</p>
-                <button id="cta-button" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
-                    Ingresar
+        <div class="container mx-auto">
+            <!-- Slideshow container -->
+            <div class="slideshow-container relative overflow-hidden rounded-xl shadow-2xl">
+                <!-- Slides -->
+                <div class="slide fade">
+                    <img src="./img/merka.jpg" alt="Merkabot Imagen 1" class="w-full h-[500px] object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                        <div class="text-white p-8">
+                            <h2 class="text-3xl md:text-4xl font-bold mb-4">Bienvenido a Merkabot</h2>
+                            <p class="text-lg mb-8">Explora la forma más fácil y rápida de hacer tus compras.</p>
+                            <button id="cta-button" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
+                                Ingresar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide fade">
+                    <img src="./img/merka2.jpg" alt="Merkabot Imagen 2" class="w-full h-[500px] object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                        <div class="text-white p-8">
+                            <h2 class="text-3xl md:text-4xl font-bold mb-4">Compra Inteligente</h2>
+                            <p class="text-lg mb-8">Deja que nuestro asistente virtual te ayude a encontrar las mejores ofertas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide fade">
+                    <img src="./img/merka3.jpg" alt="Merkabot Imagen 3" class="w-full h-[500px] object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+                        <div class="text-white p-8">
+                            <h2 class="text-3xl md:text-4xl font-bold mb-4">Ahorra Tiempo y Dinero</h2>
+                            <p class="text-lg mb-8">Optimiza tus compras con tecnología de inteligencia artificial.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de navegación -->
+                <button class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all" onclick="changeSlide(-1)">
+                    <i class="fas fa-chevron-left"></i>
                 </button>
-            </div>
-            <div class="mt-5 text-center">
-                <p class="text-black mb-4">Descubre una nueva forma de comprar</p>
-                <div class="flex justify-center">
-                    <i class="fas fa-arrow-down text-black text-2xl animate-bounce"></i>
+                <button class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all" onclick="changeSlide(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Indicadores de posición -->
+                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all dot" onclick="currentSlide(1)"></button>
+                    <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all dot" onclick="currentSlide(2)"></button>
+                    <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all dot" onclick="currentSlide(3)"></button>
                 </div>
             </div>
         </div>
@@ -198,11 +265,10 @@
                     </div>
                     <h3 class="text-2xl font-bold mb-3 text-gray-800">Plan Básico</h3>
                     <p class="text-gray-600 mb-6">Accede a funciones esenciales de generación de imágenes con IA, perfecto para comenzar tu viaje creativo.</p>
-                    <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full transition duration-300">
-                        Ver más
+                    <button onclick="openPlanModal('basic')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+                        Ver detalles
                     </button>
                 </div>
-                
                 
                 <div class="bg-gray-50 p-8 rounded-xl shadow-md card-hover border-2 border-yellow-400">
                     <div class="text-yellow-400 text-4xl mb-4">
@@ -210,10 +276,17 @@
                     </div>
                     <h3 class="text-2xl font-bold mb-3 text-gray-800">Plan Premium</h3>
                     <p class="text-gray-600 mb-6">Desbloquea todo el potencial de la IA con generación de imágenes avanzada y funciones exclusivas.</p>
-                    <button class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-6 rounded-full transition duration-300">
-                        Ver más
+                    <button onclick="openPlanModal('premium')" class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+                        Ver detalles
                     </button>
                 </div>
+            </div>
+
+            <!-- Botón de Registro -->
+            <div class="text-center mt-12">
+                <button onclick="openRegistrationModal()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
+                    Registrar mi Negocio
+                </button>
             </div>
         </div>
     </section> 
@@ -335,41 +408,267 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- Modal -->
-    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <!-- Modal Plan Básico -->
+    <div id="basicPlanModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-800">Bienvenido a Merkabot</h3>
-                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                <h3 class="text-2xl font-bold text-gray-800">Plan Básico</h3>
+                <button onclick="closePlanModal('basic')" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             
-            <p class="text-gray-600 mb-6">Regístrate ahora y obtén un 10% de descuento en tu primera compra.</p>
-            
-            <form class="space-y-4">
-                <div>
-                    <label for="email" class="block text-gray-700 mb-2">Correo electrónico</label>
-                    <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+            <div class="space-y-4">
+                <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-3"></i>
+                    <p>Generación de hasta 50 imágenes por mes</p>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-3"></i>
+                    <p>Resolución estándar</p>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-3"></i>
+                    <p>Soporte por correo electrónico</p>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check text-green-500 mr-3"></i>
+                    <p>Acceso a plantillas básicas</p>
                 </div>
                 
-                <div>
-                    <label for="password" class="block text-gray-700 mb-2">Contraseña</label>
-                    <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                <div class="mt-8">
+                    <p class="text-2xl font-bold text-center mb-4">$29.99/mes</p>
+                    <button onclick="openRegistrationModal()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition">
+                        Comenzar ahora
+                    </button>
                 </div>
-                
-                <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition">
-                    Crear cuenta
-                </button>
-            </form>
-            
-            <div class="mt-4 text-center">
-                <p class="text-gray-600">¿Ya tienes una cuenta? <a href="#" class="text-green-500 hover:underline">Inicia sesión</a></p>
             </div>
         </div>
     </div>
 
+    <!-- Modal Plan Premium -->
+    <div id="premiumPlanModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Plan Premium</h3>
+                <button onclick="closePlanModal('premium')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="flex items-center">
+                    <i class="fas fa-check text-yellow-400 mr-3"></i>
+                    <p>Generación ilimitada de imágenes</p>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check text-yellow-400 mr-3"></i>
+                    <p>Resolución 4K</p>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check text-yellow-400 mr-3"></i>
+                    <p>Soporte prioritario 24/7</p>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check text-yellow-400 mr-3"></i>
+                    <p>Acceso a todas las plantillas premium</p>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-check text-yellow-400 mr-3"></i>
+                    <p>Herramientas de edición avanzadas</p>
+                </div>
+                
+                <div class="mt-8">
+                    <p class="text-2xl font-bold text-center mb-4">$99.99/mes</p>
+                    <button onclick="openRegistrationModal()" class="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 px-4 rounded-lg transition">
+                        Comenzar ahora
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Registro -->
+    <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">Registro de Negocio</h3>
+                <button onclick="closeRegistrationModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form class="space-y-4" onsubmit="handleRegistration(event)">
+                <div>
+                    <label for="businessName" class="block text-gray-700 mb-2">Nombre del Negocio</label>
+                    <input type="text" id="businessName" name="businessName" required
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                
+                <div>
+                    <label for="ownerName" class="block text-gray-700 mb-2">Nombre del Propietario</label>
+                    <input type="text" id="ownerName" name="ownerName" required
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                
+                <div>
+                    <label for="phone" class="block text-gray-700 mb-2">Número de Celular</label>
+                    <input type="tel" 
+                           id="phone" 
+                           name="phone" 
+                           required
+                           minlength="10"
+                           maxlength="10"
+                           pattern="[0-9]{10}"
+                           placeholder="Ejemplo: 8529473394"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)"
+                           title="Por favor ingresa exactamente 10 dígitos numéricos">
+                    <p class="text-sm text-gray-500 mt-1">Ingresa exactamente 10 dígitos sin espacios ni caracteres especiales</p>
+                </div>
+                
+                <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition mt-6">
+                    Registrar Negocio
+                </button>
+            </form>
+        </div>
+    </div>
+
     <script>
+        // Variables y funciones del Slideshow
+        let slideIndex = 1;
+        let autoSlideInterval;
+
+        // Mostrar el primer slide y comenzar la rotación automática
+        showSlides(slideIndex);
+        startAutoSlide();
+
+        // Funciones para los modales de planes
+        function openPlanModal(plan) {
+            const modal = document.getElementById(plan + 'PlanModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePlanModal(plan) {
+            const modal = document.getElementById(plan + 'PlanModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Funciones para el modal de registro
+        function openRegistrationModal() {
+            const modal = document.getElementById('registrationModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRegistrationModal() {
+            const modal = document.getElementById('registrationModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Manejar el envío del formulario de registro
+        async function handleRegistration(event) {
+            event.preventDefault();
+            
+            const businessName = document.getElementById('businessName').value;
+            const ownerName = document.getElementById('ownerName').value;
+            const phone = document.getElementById('phone').value;
+            
+            try {
+                const response = await fetch('register.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        businessName,
+                        ownerName,
+                        phone
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('¡Registro exitoso! Nos pondremos en contacto contigo pronto.');
+                    closeRegistrationModal();
+                    // Limpiar el formulario
+                    document.getElementById('businessName').value = '';
+                    document.getElementById('ownerName').value = '';
+                    document.getElementById('phone').value = '';
+                } else {
+                    alert('Error al registrar: ' + data.message);
+                }
+            } catch (error) {
+                alert('Error al conectar con el servidor. Por favor, intenta de nuevo más tarde.');
+                console.error('Error:', error);
+            }
+        }
+
+        // Cerrar modales al hacer clic fuera de ellos
+        window.onclick = function(event) {
+            const modals = [
+                document.getElementById('basicPlanModal'),
+                document.getElementById('premiumPlanModal'),
+                document.getElementById('registrationModal')
+            ];
+            
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Función para cambiar slides manualmente
+        function changeSlide(n) {
+            showSlides(slideIndex += n);
+            resetAutoSlide();
+        }
+
+        // Función para ir a un slide específico
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+            resetAutoSlide();
+        }
+
+        // Función principal para mostrar slides
+        function showSlides(n) {
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("dot");
+            
+            // Ajustar el índice si se pasa de los límites
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            
+            // Ocultar todos los slides
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+                dots[i].classList.remove("active");
+            }
+            
+            // Mostrar el slide actual
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].classList.add("active");
+        }
+
+        // Función para iniciar la rotación automática
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                changeSlide(1);
+            }, 5000); // Cambiar cada 5 segundos
+        }
+
+        // Función para reiniciar el temporizador automático
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
         // Modal functionality
         const ctaButton = document.getElementById('cta-button');
         const modal = document.getElementById('modal');
