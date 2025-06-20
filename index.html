@@ -20,6 +20,13 @@
             scroll-behavior: smooth;
         }
         
+        /* Estilo para el canvas del confeti */
+        canvas.confetti-canvas {
+            position: fixed !important;
+            z-index: 9999 !important;
+            pointer-events: none;
+        }
+        
         .floating-btn {
             animation: pulse 2s infinite;
         }
@@ -613,10 +620,25 @@
                     
                     // Lanzar confeti
                     confetti({
-                        particleCount: 100,
+                        particleCount: 150,
                         spread: 70,
-                        origin: { y: 0.6 }
+                        origin: { y: 0.6 },
+                        zIndex: 9999,
+                        disableForReducedMotion: true,
+                        shapes: ['square', 'circle'],
+                        colors: ['#10B981', '#FBBF24', '#3B82F6', '#EC4899', '#8B5CF6'],
+                        scalar: 1.2
                     });
+                    
+                    // Asegurar que el canvas del confeti tenga el z-index correcto
+                    setTimeout(() => {
+                        const confettiCanvas = document.querySelector('canvas.confetti-canvas');
+                        if (confettiCanvas) {
+                            confettiCanvas.style.zIndex = '9999';
+                            confettiCanvas.style.position = 'fixed';
+                            confettiCanvas.style.pointerEvents = 'none';
+                        }
+                    }, 100);
 
                     // Mostrar mensaje de éxito
                     Swal.fire({
