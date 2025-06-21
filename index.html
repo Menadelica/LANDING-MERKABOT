@@ -104,25 +104,50 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 70px;
-            height: 70px;
-            background-color: rgba(255, 255, 255, 0.8);
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.85);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 20;
+            cursor: pointer;
+            animation: pulse-play 2s infinite;
+        }
+        
+        @keyframes pulse-play {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
         }
         
         .play-button:hover {
             background-color: rgba(255, 255, 255, 1);
             transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
         }
         
         .play-icon {
             color: #10B981;
-            font-size: 30px;
-            margin-left: 5px;
+            font-size: 32px;
+            margin-left: 6px;
+        }
+        
+        .video-overlay {
+            pointer-events: none; /* Permite que los clics pasen a través del overlay */
+        }
+        
+        #play-button {
+            pointer-events: auto; /* Permite que el botón reciba clics */
         }
 
         .rocher-font {
@@ -174,6 +199,17 @@
         
         .hw-slide:first-child {
             display: block;
+        }
+        
+        .hw-slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.2); /* Ligero oscurecimiento para que destaque el botón */
+            pointer-events: none;
         }
         
         /* Estilo para el efecto de blur */
@@ -246,11 +282,6 @@
                         <!-- Slides -->
                         <div class="hw-slide fade">
                             <img src="./img/merka.jpg" alt="Merkabot Imagen 1" class="w-full h-[300px] object-cover">
-                            <div class="video-overlay absolute inset-0 flex items-center justify-center">
-                                <div id="play-button" class="play-button">
-                                    <i class="fas fa-play play-icon"></i>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="hw-slide fade">
@@ -263,6 +294,13 @@
 
                         <div class="hw-slide fade">
                             <img src="./img/merka5.jpg" alt="Merkabot Imagen 4" class="w-full h-[300px] object-cover">
+                        </div>
+                        
+                        <!-- Overlay del botón de reproducción (sobre todas las imágenes) -->
+                        <div class="video-overlay absolute inset-0 flex items-center justify-center z-10">
+                            <div id="play-button" class="play-button" onclick="loadVideo()">
+                                <i class="fas fa-play play-icon"></i>
+                            </div>
                         </div>
 
                         <!-- Botones de navegación -->
@@ -351,7 +389,7 @@
                 <div class="bg-white p-8 rounded-xl shadow-md card-hover border-l-4 border-green-500 transform transition-all duration-300 hover:scale-105">
                     <div class="text-green-500 text-4xl mb-4">
                         <i class="fas fa-clock"></i>
-                    </div>
+            </div>
                     <h3 class="text-xl font-bold mb-3 text-gray-800">Ahorro de tiempo</h3>
                     <p class="text-gray-600">Automatiza tus procesos de compra y reduce el tiempo dedicado a buscar los mejores productos y ofertas.</p>
                 </div>
@@ -359,7 +397,7 @@
                 <div class="bg-white p-8 rounded-xl shadow-md card-hover border-l-4 border-yellow-400 transform transition-all duration-300 hover:scale-105">
                     <div class="text-yellow-400 text-4xl mb-4">
                         <i class="fas fa-coins"></i>
-                    </div>
+            </div>
                     <h3 class="text-xl font-bold mb-3 text-gray-800">Ahorro económico</h3>
                     <p class="text-gray-600">Encuentra las mejores ofertas y promociones disponibles para maximizar tu presupuesto de compras.</p>
                 </div>
@@ -502,7 +540,7 @@
         <div class="container">
             <div class="text-center text-gray-400">
                 <p>&copy; 2023 Merkabot. Todos los derechos reservados.</p>
-            </div>
+                </div>
         </div>
     </footer>
 
@@ -519,8 +557,8 @@
                 <button onclick="closePlanModal('basic')" class="text-gray-500 hover:text-gray-700">
                     <i class="fas fa-times"></i>
                 </button>
-            </div>
-            
+                </div>
+                
             <div class="space-y-4">
                 <div class="flex items-center">
                     <i class="fas fa-check text-green-500 mr-3"></i>
@@ -546,9 +584,9 @@
                     </button>
                 </div>
             </div>
-        </div>
-    </div>
-
+                </div>
+            </div>
+            
     <!-- Modal Plan Premium -->
     <div id="premiumPlanModal" class="fixed inset-0 modal-backdrop flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
@@ -563,7 +601,7 @@
                 <div class="flex items-center">
                     <i class="fas fa-check text-yellow-400 mr-3"></i>
                     <p>Generación ilimitada de imágenes</p>
-                </div>
+        </div>
                 <div class="flex items-center">
                     <i class="fas fa-check text-yellow-400 mr-3"></i>
                     <p>Resolución 4K</p>
@@ -641,7 +679,7 @@
                            title="Por favor ingresa exactamente 10 dígitos numéricos">
                     <p class="text-sm text-gray-500 mt-1">Ingresa exactamente 10 dígitos sin espacios ni caracteres especiales</p>
                 </div>
-
+                
                 <div>
                     <div class="flex items-center justify-between mb-2">
                         <label class="text-gray-700">Ubicación del Negocio</label>
@@ -651,7 +689,7 @@
                                 onclick="toggleMapSection()">
                             <span id="toggleMapText">Mostrar mapa</span>
                             <i id="toggleMapIcon" class="fas fa-chevron-down ml-1"></i>
-                        </button>
+                </button>
                     </div>
                     
                     <div id="mapSection" class="hidden">
@@ -662,7 +700,7 @@
                                     <i class="fas fa-search-location text-green-500 mr-2"></i>
                                     <input type="text" id="searchLocation" placeholder="Buscar ubicación..." 
                                            class="w-full px-3 py-1 border border-gray-300 rounded-lg text-sm">
-                                </div>
+            </div>
                                 <div class="grid grid-cols-2 gap-2">
                                     <div>
                                         <label for="lat" class="text-xs text-gray-600">Latitud:</label>
@@ -1278,13 +1316,13 @@
             if (e.target.closest('.play-button')) {
                 console.log('Botón de play clickeado (delegación de eventos)');
                 e.preventDefault();
-                e.stopPropagation();
-                loadVideo();
+            e.stopPropagation();
+            loadVideo();
             }
             // Verificar si el clic fue en el thumbnail (excluyendo el botón de play)
             else if (e.target.closest('.video-thumbnail') && !e.target.closest('.play-button')) {
                 console.log('Thumbnail de video clickeado (delegación de eventos)');
-            loadVideo();
+                loadVideo();
             }
         });
         
@@ -1294,7 +1332,7 @@
                 console.log('Botón de play clickeado (onclick directo)');
                 e.preventDefault();
                 e.stopPropagation();
-                loadVideo();
+            loadVideo();
                 return false;
             };
         } else {
@@ -1311,12 +1349,12 @@
             console.error('El thumbnail de video no se encontró en el DOM');
         }
         
-                function loadVideo() {
+        function loadVideo() {
             console.log('Función loadVideo() ejecutada');
             try {
-                // Reemplaza este ID con el ID real de tu video de YouTube
-                const videoId = 'dQw4w9WgXcQ'; // Este es un ID de ejemplo (Rick Astley)
-                
+            // Reemplaza este ID con el ID real de tu video de YouTube
+            const videoId = 'dQw4w9WgXcQ'; // Este es un ID de ejemplo (Rick Astley)
+            
                 // Detener el slideshow automático
                 clearInterval(hwAutoSlideInterval);
                 
@@ -1338,22 +1376,18 @@
                 videoModal.style.alignItems = 'center';
                 videoModal.style.justifyContent = 'center';
                 videoModal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // Prevenir scroll
-                console.log('Modal de video mostrado, clases actuales:', videoModal.className);
                 
-                // Insertar el iframe en el contenedor del modal
+                // Insertar el iframe en el contenedor del modal (asegurarse de que se inserta correctamente)
                 const modalVideoContainer = document.querySelector('#modalVideoContainer');
-                console.log('Contenedor de video modal encontrado:', modalVideoContainer);
-                
                 if (!modalVideoContainer) {
-                    throw new Error('No se encontró el contenedor para el video modal');
+                    throw new Error('No se encontró el contenedor del video modal');
                 }
                 
-                // Insertar el iframe
-                                    modalVideoContainer.innerHTML = `
+                // Limpiar cualquier contenido previo e insertar el iframe
+                modalVideoContainer.innerHTML = `
                 <iframe 
                     width="100%" 
-                            height="400" 
+                        height="400" 
                     src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
                     frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -1362,6 +1396,9 @@
                 ></iframe>
             `;
                 console.log('Iframe insertado en el modal');
+                
+                document.body.style.overflow = 'hidden'; // Prevenir scroll
+                console.log('Modal de video mostrado, clases actuales:', videoModal.className);
                 
                 // Verificación final
                 setTimeout(() => {
