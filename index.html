@@ -22,6 +22,21 @@
             scroll-behavior: smooth;
         }
         
+        .container {
+            max-width: 1280px !important;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            width: 100%;
+        }
+        
+        @media (max-width: 1280px) {
+            .container {
+                max-width: 100% !important;
+            }
+        }
+        
         /* Estilo para el canvas del confeti */
         canvas.confetti-canvas {
             position: fixed !important;
@@ -148,28 +163,13 @@
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-green-500 to-green-600 py-6 px-4 md:px-10 shadow-md">        <div class="container mx-auto flex justify-between items-center">            <div class="flex items-center">
-                <img src="./img/LOGOSORA.png" alt="" class="img-fluid w-16 h-26">
-                <h1 class="text-2xl md:text-3xl font-bold text-yellow-400 ml-2" style="font-family: 'RocherFont', sans-serif; color: #facc15 !important;">MERKABOT</h1>
-            </div>
-            <nav class="hidden md:block">
-                <ul class="flex space-x-8">
-                    <li><a href="#features" class="text-white hover:text-yellow-200 transition">Login up</a></li>
-                    <li><a href="#how-it-works" class="text-white hover:text-yellow-200 transition">Sign up</a></li>
-                    
-                </ul>
-            </nav>
-            <button class="md:hidden text-white text-2xl">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </header>
-
-
+    <header class="bg-gradient-to-r from-green-500 to-green-600 py-6 px-4 md:px-10 shadow-md sticky top-0 z-50">
+        <div class="container flex justify-between items-center">
+            <div class="flex items-center">hgh
 
     <!-- How it works -->
     <section id="how-it-works" class="py-16 px-4 md:px-10 bg-gradient-to-b from-yellow-200 to-yellow-200">
-        <div class="container mx-auto">
+        <div class="container">
             
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
@@ -228,9 +228,9 @@
         </div>
     </section>
 
-      <!-- Hero Section -->
-     <section class="py-16 md:py-24 px-4 md:px-10 bg-gradient-to-b from-green-100 to-green-100">
-        <div class="container mx-auto">
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24 px-4 md:px-10 bg-gradient-to-b from-green-100 to-green-100">
+        <div class="container">
             <!-- Slideshow container -->
             <div class="slideshow-container relative overflow-hidden rounded-xl shadow-2xl">
                 <!-- Slides -->
@@ -285,9 +285,9 @@
         </div>
     </section> 
 
-     <!-- Features Section -->
-     <section id="features" class="py-16 px-4 md:px-10 bg-gradient-to-br from-green-50 via-white to-yellow-50">
-        <div class="container mx-auto">
+    <!-- Features Section -->
+    <section id="features" class="py-16 px-4 md:px-10 bg-gradient-to-br from-green-50 via-white to-yellow-50">
+        <div class="container">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Imágenes generadas por IA</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -326,7 +326,7 @@
 
     <!-- Testimonials -->
     <section id="testimonials" class="py-16 px-4 md:px-10 bg-white">
-        <div class="container mx-auto">
+        <div class="container">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Lo que dicen nuestros usuarios</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -375,7 +375,7 @@
 
     <!-- CTA Section -->
     <section class="py-16 px-4 md:px-10 bg-gradient-to-r from-green-500 to-green-600">
-        <div class="container mx-auto text-center">
+        <div class="container">
             <h2 class="text-3xl font-bold text-white mb-6">¿Listo para transformar tu experiencia de compra?</h2>
             <p class="text-white mb-8 text-lg">Únete a miles de usuarios satisfechos que ya compran de manera inteligente.</p>
             <button class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-10 rounded-full text-lg transition duration-300 transform hover:scale-105">
@@ -386,7 +386,7 @@
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12 px-4 md:px-10">
-        <div class="container mx-auto">
+        <div class="container">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <h3 class="text-xl font-bold mb-4 flex items-center">
