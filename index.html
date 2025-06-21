@@ -282,7 +282,7 @@
                         <!-- Slides -->
                         <div class="hw-slide fade">
                             <img src="./img/merka.jpg" alt="Merkabot Imagen 1" class="w-full h-[300px] object-cover">
-                        </div>
+                            </div>
 
                         <div class="hw-slide fade">
                             <img src="./img/merka2.jpg" alt="Merkabot Imagen 2" class="w-full h-[300px] object-cover">
@@ -294,7 +294,7 @@
 
                         <div class="hw-slide fade">
                             <img src="./img/merka5.jpg" alt="Merkabot Imagen 4" class="w-full h-[300px] object-cover">
-                        </div>
+                    </div>
                         
 
 
@@ -931,10 +931,10 @@
             
             modals.forEach(modal => {
                 if (modal) {
-                    modal.classList.add('hidden');
-                }
-            });
-            
+                modal.classList.add('hidden');
+            }
+        });
+        
             // Limpiar el contenido del video para detener la reproducción
             if (document.getElementById('modalVideoContainer')) {
                 document.getElementById('modalVideoContainer').innerHTML = '';
@@ -1232,9 +1232,9 @@
         function loadVideo() {
             console.log('Función loadVideo() ejecutada');
             try {
-                // Reemplaza este ID con el ID real de tu video de YouTube
-                const videoId = 'dQw4w9WgXcQ'; // Este es un ID de ejemplo (Rick Astley)
-                
+            // Reemplaza este ID con el ID real de tu video de YouTube
+            const videoId = 'dQw4w9WgXcQ'; // Este es un ID de ejemplo (Rick Astley)
+            
                 // Detener el slideshow automático
                 clearInterval(hwAutoSlideInterval);
                 
@@ -1265,16 +1265,16 @@
                 
                 // Limpiar cualquier contenido previo e insertar el iframe
                 modalVideoContainer.innerHTML = `
-                    <iframe 
-                        width="100%" 
+                <iframe 
+                    width="100%" 
                         height="400" 
-                        src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen
-                        class="rounded-xl"
-                    ></iframe>
-                `;
+                    src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    class="rounded-xl"
+                ></iframe>
+            `;
                 console.log('Iframe insertado en el modal');
                 
                 document.body.style.overflow = 'hidden'; // Prevenir scroll
