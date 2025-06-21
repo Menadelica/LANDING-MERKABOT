@@ -156,8 +156,24 @@
             display: block;
         }
 
-        .dot.active {
+        .dot.active, .hw-dot.active {
             background-color: white;
+        }
+        
+        /* Estilos específicos para el slideshow de How it Works */
+        .image-slideshow {
+            max-width: 100%;
+            position: relative;
+            margin: auto;
+        }
+        
+        .hw-slide {
+            display: none;
+            position: relative;
+        }
+        
+        .hw-slide:first-child {
+            display: block;
         }
         
         /* Estilo para el efecto de blur */
@@ -225,18 +241,49 @@
             
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
-                    <div class="video-container">
-                        <div id="video-thumbnail" class="video-thumbnail rounded-xl shadow-lg overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                                 alt="Robot ayudando con compras" 
-                                 class="w-full h-auto">
-                            <div id="play-button" class="play-button">
-                                <i class="fas fa-play play-icon"></i>
+                    <!-- Slideshow container -->
+                    <div class="image-slideshow relative rounded-xl shadow-lg overflow-hidden">
+                        <!-- Slides -->
+                        <div class="hw-slide fade">
+                            <img src="./img/merka.jpg" alt="Merkabot Imagen 1" class="w-full h-[300px] object-cover">
+                            <div class="video-overlay absolute inset-0 flex items-center justify-center">
+                                <div id="play-button" class="play-button">
+                                    <i class="fas fa-play play-icon"></i>
+                                </div>
                             </div>
                         </div>
-                        <div id="video-embed" class="hidden">
-                            <!-- Aquí se insertará el iframe cuando se haga clic -->
+
+                        <div class="hw-slide fade">
+                            <img src="./img/merka2.jpg" alt="Merkabot Imagen 2" class="w-full h-[300px] object-cover">
                         </div>
+
+                        <div class="hw-slide fade">
+                            <img src="./img/merka3.jpg" alt="Merkabot Imagen 3" class="w-full h-[300px] object-cover">
+                        </div>
+
+                        <div class="hw-slide fade">
+                            <img src="./img/merka5.jpg" alt="Merkabot Imagen 4" class="w-full h-[300px] object-cover">
+                        </div>
+
+                        <!-- Botones de navegación -->
+                        <button class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-8 h-8 rounded-full flex items-center justify-center transition-all" onclick="changeHWSlide(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-8 h-8 rounded-full flex items-center justify-center transition-all" onclick="changeHWSlide(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+
+                        <!-- Indicadores de posición -->
+                        <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                            <button class="w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all hw-dot" onclick="currentHWSlide(1)"></button>
+                            <button class="w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all hw-dot" onclick="currentHWSlide(2)"></button>
+                            <button class="w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all hw-dot" onclick="currentHWSlide(3)"></button>
+                            <button class="w-2 h-2 rounded-full bg-white/50 hover:bg-white transition-all hw-dot" onclick="currentHWSlide(4)"></button>
+                        </div>
+                    </div>
+                    
+                    <div id="video-embed" class="hidden rounded-xl overflow-hidden shadow-lg mt-4">
+                        <!-- Aquí se insertará el iframe cuando se haga clic -->
                     </div>
                 </div>
                 <div class="md:w-1/2">
@@ -292,45 +339,73 @@
     </div>
 
       <!-- Hero Section -->
-     <section class="py-16 md:py-24 px-4 md:px-10 bg-gradient-to-b from-green-100 to-green-100">
+    
+
+    <section id="features" class="py-16 px-4 md:px-10 bg-gradient-to-br from-green-200 via-green-100 to-yellow-200">
         <div class="container">
-            <!-- Slideshow container -->
-            <div class="slideshow-container relative overflow-hidden rounded-xl shadow-2xl">
-                <!-- Slides -->
-                <div class="slide fade">
-                    <img src="./img/merka.jpg" alt="Merkabot Imagen 1" class="w-full h-[500px] object-cover">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Beneficios de usar Merkabot</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">Descubre cómo nuestra tecnología puede transformar tu negocio y mejorar la experiencia de tus clientes.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover border-l-4 border-green-500 transform transition-all duration-300 hover:scale-105">
+                    <div class="text-green-500 text-4xl mb-4">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Ahorro de tiempo</h3>
+                    <p class="text-gray-600">Automatiza tus procesos de compra y reduce el tiempo dedicado a buscar los mejores productos y ofertas.</p>
                 </div>
-
-                <div class="slide fade">
-                    <img src="./img/merka2.jpg" alt="Merkabot Imagen 2" class="w-full h-[500px] object-cover">
+                
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover border-l-4 border-yellow-400 transform transition-all duration-300 hover:scale-105">
+                    <div class="text-yellow-400 text-4xl mb-4">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Ahorro económico</h3>
+                    <p class="text-gray-600">Encuentra las mejores ofertas y promociones disponibles para maximizar tu presupuesto de compras.</p>
                 </div>
-
-                <div class="slide fade">
-                    <img src="./img/merka3.jpg" alt="Merkabot Imagen 3" class="w-full h-[500px] object-cover">
+                
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover border-l-4 border-blue-500 transform transition-all duration-300 hover:scale-105">
+                    <div class="text-blue-500 text-4xl mb-4">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Asistencia inteligente</h3>
+                    <p class="text-gray-600">Recibe recomendaciones personalizadas basadas en tus preferencias y hábitos de compra.</p>
                 </div>
-
-                <!-- Botones de navegación -->
-                <button class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all" onclick="changeSlide(-1)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all" onclick="changeSlide(1)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-
-                <!-- Indicadores de posición -->
-                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                    <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all dot" onclick="currentSlide(1)"></button>
-                    <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all dot" onclick="currentSlide(2)"></button>
-                    <button class="w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all dot" onclick="currentSlide(3)"></button>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover border-l-4 border-purple-500 transform transition-all duration-300 hover:scale-105">
+                    <div class="text-purple-500 text-4xl mb-4">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Acceso desde cualquier lugar</h3>
+                    <p class="text-gray-600">Realiza tus compras desde la comodidad de tu hogar o mientras te desplazas, a cualquier hora del día.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover border-l-4 border-red-500 transform transition-all duration-300 hover:scale-105">
+                    <div class="text-red-500 text-4xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Compras seguras</h3>
+                    <p class="text-gray-600">Disfruta de un entorno de compra protegido con tecnología de encriptación avanzada para tus datos.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-md card-hover border-l-4 border-orange-500 transform transition-all duration-300 hover:scale-105">
+                    <div class="text-orange-500 text-4xl mb-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800">Seguimiento en tiempo real</h3>
+                    <p class="text-gray-600">Monitorea el estado de tus pedidos y recibe actualizaciones instantáneas sobre su progreso.</p>
                 </div>
             </div>
+
+            <!-- Botón de Registro -->
+        
         </div>
     </section> 
 
      <!-- Features Section -->
     <section id="features" class="py-16 px-4 md:px-10 bg-gradient-to-br from-green-200 via-green-100 to-yellow-200">
         <div class="container">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Imágenes generadas por IA</h2>
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Tecnología que vende</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               
@@ -693,13 +768,19 @@
             });
         }
         
-        // Variables y funciones del Slideshow
+        // Variables y funciones del Slideshow principal
         let slideIndex = 1;
         let autoSlideInterval;
 
-        // Mostrar el primer slide y comenzar la rotación automática
+        // Variables y funciones del Slideshow de How it Works
+        let hwSlideIndex = 1;
+        let hwAutoSlideInterval;
+
+        // Mostrar el primer slide de ambos slideshows y comenzar la rotación automática
         showSlides(slideIndex);
+        showHWSlides(hwSlideIndex);
         startAutoSlide();
+        startHWAutoSlide();
 
         // Variables para el mapa
         let map;
@@ -1111,6 +1192,47 @@
             clearInterval(autoSlideInterval);
             startAutoSlide();
         }
+        
+        // Funciones para el slideshow de How it Works
+        function changeHWSlide(n) {
+            showHWSlides(hwSlideIndex += n);
+            resetHWAutoSlide();
+        }
+
+        function currentHWSlide(n) {
+            showHWSlides(hwSlideIndex = n);
+            resetHWAutoSlide();
+        }
+
+        function showHWSlides(n) {
+            let slides = document.getElementsByClassName("hw-slide");
+            let dots = document.getElementsByClassName("hw-dot");
+            
+            // Ajustar el índice si se pasa de los límites
+            if (n > slides.length) {hwSlideIndex = 1}
+            if (n < 1) {hwSlideIndex = slides.length}
+            
+            // Ocultar todos los slides
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+                dots[i].classList.remove("active");
+            }
+            
+            // Mostrar el slide actual
+            slides[hwSlideIndex-1].style.display = "block";
+            dots[hwSlideIndex-1].classList.add("active");
+        }
+
+        function startHWAutoSlide() {
+            hwAutoSlideInterval = setInterval(() => {
+                changeHWSlide(1);
+            }, 4000); // Cambiar cada 4 segundos
+        }
+
+        function resetHWAutoSlide() {
+            clearInterval(hwAutoSlideInterval);
+            startHWAutoSlide();
+        }
 
         // Modal functionality
         const ctaButton = document.getElementById('cta-button');
@@ -1189,12 +1311,15 @@
             console.error('El thumbnail de video no se encontró en el DOM');
         }
         
-        function loadVideo() {
+                function loadVideo() {
             console.log('Función loadVideo() ejecutada');
             try {
-            // Reemplaza este ID con el ID real de tu video de YouTube
-            const videoId = 'dQw4w9WgXcQ'; // Este es un ID de ejemplo (Rick Astley)
-            
+                // Reemplaza este ID con el ID real de tu video de YouTube
+                const videoId = 'dQw4w9WgXcQ'; // Este es un ID de ejemplo (Rick Astley)
+                
+                // Detener el slideshow automático
+                clearInterval(hwAutoSlideInterval);
+                
                 // Aplicar blur al fondo
                 document.querySelectorAll('section, header, footer').forEach(element => {
                     element.classList.add('blur-effect');
