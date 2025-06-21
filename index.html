@@ -241,6 +241,17 @@
         </div>
     </section>
 
+    <!-- Separador con círculos decorativos -->
+    <div class="relative py-4 bg-gradient-to-r from-green-100 to-yellow-100">
+        <div class="container mx-auto flex justify-center items-center">
+            <div class="w-4 h-4 rounded-full bg-green-500 mx-1 animate-pulse"></div>
+            <div class="w-6 h-6 rounded-full bg-yellow-400 mx-1 animate-pulse" style="animation-delay: 0.2s"></div>
+            <div class="w-8 h-8 rounded-full bg-orange-500 mx-1 animate-pulse" style="animation-delay: 0.4s"></div>
+            <div class="w-6 h-6 rounded-full bg-yellow-400 mx-1 animate-pulse" style="animation-delay: 0.6s"></div>
+            <div class="w-4 h-4 rounded-full bg-green-500 mx-1 animate-pulse" style="animation-delay: 0.8s"></div>
+        </div>
+    </div>
+
     <!-- Hero Section -->
     <section class="py-16 md:py-24 px-4 md:px-10 bg-gradient-to-b from-green-100 to-green-100">
         <div class="container">
@@ -249,35 +260,14 @@
                 <!-- Slides -->
                 <div class="slide fade">
                     <img src="./img/merka.jpg" alt="Merkabot Imagen 1" class="w-full h-[500px] object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                        <div class="text-white p-8">
-                            <h2 class="text-3xl md:text-4xl font-bold mb-4">Bienvenido a Merkabot</h2>
-                            <p class="text-lg mb-8">Explora la forma más fácil y rápida de hacer tus compras.</p>
-                <button id="cta-button" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
-                    Ingresar
-                </button>
-            </div>
-                    </div>
                 </div>
 
                 <div class="slide fade">
                     <img src="./img/merka2.jpg" alt="Merkabot Imagen 2" class="w-full h-[500px] object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                        <div class="text-white p-8">
-                            <h2 class="text-3xl md:text-4xl font-bold mb-4">Compra Inteligente</h2>
-                            <p class="text-lg mb-8">Deja que nuestro asistente virtual te ayude a encontrar las mejores ofertas.</p>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="slide fade">
                     <img src="./img/merka3.jpg" alt="Merkabot Imagen 3" class="w-full h-[500px] object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
-                        <div class="text-white p-8">
-                            <h2 class="text-3xl md:text-4xl font-bold mb-4">Ahorra Tiempo y Dinero</h2>
-                            <p class="text-lg mb-8">Optimiza tus compras con tecnología de inteligencia artificial.</p>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- Botones de navegación -->
@@ -299,7 +289,7 @@
     </section> 
 
     <!-- Features Section -->
-    <section id="features" class="py-16 px-4 md:px-10 bg-gradient-to-br from-green-50 via-white to-yellow-50">
+    <section id="features" class="py-16 px-4 md:px-10 bg-gradient-to-br from-green-200 via-green-100 to-yellow-200">
         <div class="container">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Imágenes generadas por IA</h2>
             
@@ -530,6 +520,18 @@
         </div>
     </div>
 
+    <!-- Modal de Video -->
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-80 items-center justify-center z-50 hidden" style="display: none !important;">
+        <div class="relative w-full max-w-4xl mx-4">
+            <button onclick="closeVideoModal()" class="absolute -top-10 right-0 text-white text-2xl hover:text-gray-300 transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modalVideoContainer" class="w-full rounded-xl overflow-hidden shadow-2xl">
+                <!-- El iframe del video se insertará aquí -->
+            </div>
+        </div>
+    </div>
+
     <!-- Modal de Registro -->
     <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
@@ -624,6 +626,77 @@
     </div>
 
     <script>
+        // Función para verificar que todos los elementos del DOM estén cargados e inicializar eventos
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM completamente cargado');
+            
+            // Verificar elementos críticos usando querySelector (más confiable con clases)
+            const elementsToCheck = {
+                'video-thumbnail': document.querySelector('.video-thumbnail'),
+                'play-button': document.querySelector('.play-button'),
+                'videoModal': document.querySelector('#videoModal'),
+                'modalVideoContainer': document.querySelector('#modalVideoContainer')
+            };
+            
+            console.log('Estado de elementos críticos (querySelector):', elementsToCheck);
+            
+            // Verificar si hay algún elemento faltante
+            const missingElements = Object.entries(elementsToCheck)
+                .filter(([key, value]) => !value)
+                .map(([key]) => key);
+                
+            if (missingElements.length > 0) {
+                console.error('ELEMENTOS FALTANTES:', missingElements);
+            } else {
+                console.log('Todos los elementos necesarios están presentes en el DOM');
+                
+                // Inicializar manualmente los eventos de clic
+                initializeVideoEvents();
+            }
+        });
+        
+        // Función para inicializar eventos de video
+        function initializeVideoEvents() {
+            console.log('Inicializando eventos de video manualmente');
+            
+            // Obtener referencias usando querySelector
+            const playBtn = document.querySelector('.play-button');
+            const thumbnail = document.querySelector('.video-thumbnail');
+            
+            if (playBtn) {
+                // Agregar evento de clic directamente al botón
+                console.log('Agregando evento de clic al botón de play manualmente');
+                playBtn.addEventListener('click', function(e) {
+                    console.log('CLIC EN BOTÓN DE PLAY DETECTADO (manual)');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    loadVideo();
+                });
+                
+                // También agregar a todos los elementos hijos del botón
+                const playBtnChildren = playBtn.querySelectorAll('*');
+                playBtnChildren.forEach(child => {
+                    child.addEventListener('click', function(e) {
+                        console.log('CLIC EN HIJO DEL BOTÓN DE PLAY DETECTADO (manual)');
+                        e.preventDefault();
+                        e.stopPropagation();
+                        loadVideo();
+                    });
+                });
+            }
+            
+            // También agregar un evento global para capturar cualquier clic
+            document.body.addEventListener('click', function(e) {
+                // Verificar si el clic fue en o dentro del botón de play
+                if (e.target.closest('.play-button') || e.target.classList.contains('play-icon')) {
+                    console.log('CLIC GLOBAL EN BOTÓN DE PLAY DETECTADO');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    loadVideo();
+                }
+            });
+        }
+        
         // Variables y funciones del Slideshow
         let slideIndex = 1;
         let autoSlideInterval;
@@ -790,7 +863,8 @@
             const modals = [
                 document.getElementById('basicPlanModal'),
                 document.getElementById('premiumPlanModal'),
-                document.getElementById('registrationModal')
+                document.getElementById('registrationModal'),
+                document.getElementById('videoModal')
             ];
             
             modals.forEach(modal => {
@@ -798,6 +872,11 @@
                     modal.classList.add('hidden');
                 }
             });
+            
+            // Limpiar el contenido del video para detener la reproducción
+            if (document.getElementById('modalVideoContainer')) {
+                document.getElementById('modalVideoContainer').innerHTML = '';
+            }
             
             document.body.style.overflow = 'auto';
         }
@@ -920,15 +999,26 @@
 
         // Cerrar modales al hacer clic fuera de ellos
         window.onclick = function(event) {
+            console.log('Click detectado en:', event.target);
+            
             const modals = [
                 document.getElementById('basicPlanModal'),
                 document.getElementById('premiumPlanModal'),
-                document.getElementById('registrationModal')
+                document.getElementById('registrationModal'),
+                document.getElementById('videoModal')
             ];
             
             modals.forEach(modal => {
                 if (event.target === modal) {
-                    closeAllModals();
+                    console.log('Click detectado en el modal:', modal.id);
+                    
+                    if (event.target === document.getElementById('videoModal')) {
+                        console.log('Cerrando modal de video por click fuera');
+                        closeVideoModal();
+                    } else {
+                        console.log('Cerrando todos los modales por click fuera');
+                        closeAllModals();
+                    }
                 }
             });
         }
@@ -1005,36 +1095,152 @@
         });
         
         // Video functionality
-        const videoThumbnail = document.getElementById('video-thumbnail');
-        const playButton = document.getElementById('play-button');
+        // Asegurarnos que estos selectores apunten a los elementos correctos
+        const videoThumbnail = document.querySelector('.video-thumbnail');
+        const playButton = document.querySelector('.play-button');
         const videoEmbed = document.getElementById('video-embed');
         
-        playButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            loadVideo();
+        console.log('Elementos de video (usando querySelector):', { 
+            videoThumbnail: videoThumbnail, 
+            playButton: playButton, 
+            videoEmbed: videoEmbed 
         });
         
-        videoThumbnail.addEventListener('click', () => {
-            loadVideo();
+        // Agregar evento directamente al documento para asegurar que se capture
+        document.addEventListener('click', function(e) {
+            // Verificar si el clic fue en el botón de play o en alguno de sus hijos
+            if (e.target.closest('.play-button')) {
+                console.log('Botón de play clickeado (delegación de eventos)');
+                e.preventDefault();
+                e.stopPropagation();
+                loadVideo();
+            }
+            // Verificar si el clic fue en el thumbnail (excluyendo el botón de play)
+            else if (e.target.closest('.video-thumbnail') && !e.target.closest('.play-button')) {
+                console.log('Thumbnail de video clickeado (delegación de eventos)');
+                loadVideo();
+            }
         });
+        
+        // También mantener los listeners originales como respaldo
+        if (playButton) {
+            playButton.onclick = function(e) {
+                console.log('Botón de play clickeado (onclick directo)');
+                e.preventDefault();
+                e.stopPropagation();
+                loadVideo();
+                return false;
+            };
+        } else {
+            console.error('El botón de play no se encontró en el DOM');
+        }
+        
+        if (videoThumbnail) {
+            videoThumbnail.onclick = function() {
+                console.log('Thumbnail de video clickeado (onclick directo)');
+                loadVideo();
+                return false;
+            };
+        } else {
+            console.error('El thumbnail de video no se encontró en el DOM');
+        }
         
         function loadVideo() {
-            // Reemplaza este ID con el ID real de tu video de YouTube
-            const videoId = 'dQw4w9WgXcQ'; // Este es un ID de ejemplo (Rick Astley)
-            
-            videoThumbnail.classList.add('hidden');
-            videoEmbed.classList.remove('hidden');
-            videoEmbed.innerHTML = `
-                <iframe 
-                    width="100%" 
-                    height="315" 
-                    src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen
-                    class="rounded-xl"
-                ></iframe>
-            `;
+            console.log('Función loadVideo() ejecutada');
+            try {
+                // Reemplaza este ID con el ID real de tu video de YouTube
+                const videoId = 'dQw4w9WgXcQ'; // Este es un ID de ejemplo (Rick Astley)
+                
+                // Mostrar el modal - usar querySelector como alternativa
+                const videoModal = document.querySelector('#videoModal');
+                console.log('Modal de video encontrado (querySelector):', videoModal);
+                
+                if (!videoModal) {
+                    throw new Error('No se encontró el modal de video en el DOM');
+                }
+                
+                // Asegurarse de que el modal esté visible
+                videoModal.style.display = 'flex';
+                videoModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevenir scroll
+                console.log('Modal de video mostrado, clases actuales:', videoModal.className);
+                
+                // Insertar el iframe en el contenedor del modal
+                const modalVideoContainer = document.querySelector('#modalVideoContainer');
+                console.log('Contenedor de video modal encontrado:', modalVideoContainer);
+                
+                if (!modalVideoContainer) {
+                    throw new Error('No se encontró el contenedor para el video modal');
+                }
+                
+                // Insertar el iframe
+                modalVideoContainer.innerHTML = `
+                    <iframe 
+                        width="100%" 
+                        height="600" 
+                        src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        class="rounded-xl"
+                    ></iframe>
+                `;
+                console.log('Iframe insertado en el modal');
+                
+                // Verificación final
+                setTimeout(() => {
+                    console.log('Estado del modal después de 100ms:', {
+                        display: videoModal.style.display,
+                        classes: videoModal.className,
+                        isHidden: videoModal.classList.contains('hidden'),
+                        childrenCount: modalVideoContainer.children.length,
+                        hasIframe: modalVideoContainer.querySelector('iframe') !== null
+                    });
+                }, 100);
+                
+            } catch (error) {
+                console.error('Error al cargar el video:', error);
+                alert('Hubo un problema al cargar el video. Por favor, intenta de nuevo.');
+            }
+        }
+        
+        function closeVideoModal() {
+            console.log('Función closeVideoModal() ejecutada');
+            try {
+                // Usar querySelector como alternativa más confiable
+                const videoModal = document.querySelector('#videoModal');
+                
+                if (!videoModal) {
+                    throw new Error('No se encontró el modal de video para cerrarlo');
+                }
+                
+                // Asegurar que el modal esté oculto usando múltiples métodos
+                videoModal.classList.add('hidden');
+                videoModal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restaurar scroll
+                console.log('Modal de video ocultado, clases actuales:', videoModal.className);
+                
+                // Limpiar el contenido del video para detener la reproducción
+                const modalVideoContainer = document.querySelector('#modalVideoContainer');
+                if (modalVideoContainer) {
+                    modalVideoContainer.innerHTML = '';
+                    console.log('Contenido del video limpiado');
+                } else {
+                    console.error('No se encontró el contenedor del video para limpiarlo');
+                }
+                
+                // Verificación final
+                setTimeout(() => {
+                    console.log('Estado del modal después de cerrar (100ms):', {
+                        display: videoModal.style.display,
+                        classes: videoModal.className,
+                        isHidden: videoModal.classList.contains('hidden')
+                    });
+                }, 100);
+                
+            } catch (error) {
+                console.error('Error al cerrar el modal de video:', error);
+            }
         }
 
         // Map functionality
