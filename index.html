@@ -163,7 +163,40 @@
         /* Estilo para el efecto de blur */
         .blur-effect {
             filter: blur(5px);
-            transition: filter 0.3s ease;
+            transition: filter 0.3s ease-in-out;
+            pointer-events: none; /* Evita interacciones con elementos borrosos */
+        }
+        
+        /* Estilo para modales con fondo borroso */
+        .modal-backdrop {
+            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.7);
+            transition: backdrop-filter 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+        
+        /* Estilos para SweetAlert2 con blur */
+        .swal-backdrop-blur {
+            backdrop-filter: blur(10px);
+        }
+        
+        .swal2-popup {
+            border-radius: 1rem !important;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+        }
+        
+        .swal2-title, .swal2-html-container {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        
+        .swal2-confirm, .swal2-cancel {
+            border-radius: 9999px !important;
+            padding: 0.75rem 1.5rem !important;
+            font-weight: 600 !important;
+            transition: transform 0.2s ease !important;
+        }
+        
+        .swal2-confirm:hover, .swal2-cancel:hover {
+            transform: scale(1.05) !important;
         }
     </style>
 </head>
@@ -404,7 +437,7 @@
     </a>
 
     <!-- Modal Plan Básico -->
-    <div id="basicPlanModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div id="basicPlanModal" class="fixed inset-0 modal-backdrop flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-2xl font-bold text-gray-800">Plan Básico</h3>
@@ -442,7 +475,7 @@
     </div>
 
     <!-- Modal Plan Premium -->
-    <div id="premiumPlanModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div id="premiumPlanModal" class="fixed inset-0 modal-backdrop flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-2xl font-bold text-gray-800">Plan Premium</h3>
@@ -484,7 +517,7 @@
     </div>
 
     <!-- Modal de Video -->
-    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden" style="display: none !important;">
+    <div id="videoModal" class="fixed inset-0 modal-backdrop z-50 hidden" style="display: none !important;">
         <div class="relative w-full max-w-2xl mx-auto px-4 py-10">
             <button onclick="closeVideoModal()" class="absolute -top-8 right-4 text-white text-xl hover:text-gray-300 transition">
                 <i class="fas fa-times"></i>
@@ -496,7 +529,7 @@
     </div>
 
     <!-- Modal de Registro -->
-    <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div id="registrationModal" class="fixed inset-0 modal-backdrop flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-2xl font-bold text-gray-800">Registro de Negocio</h3>
@@ -781,6 +814,11 @@
             // Cerrar todos los modales primero
             closeAllModals();
             
+            // Aplicar blur al fondo
+            document.querySelectorAll('section, header, footer').forEach(element => {
+                element.classList.add('blur-effect');
+            });
+            
             // Abrir el modal específico
             const modal = document.getElementById(plan + 'PlanModal');
             modal.classList.remove('hidden');
@@ -791,6 +829,11 @@
             const modal = document.getElementById(plan + 'PlanModal');
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
+            
+            // Quitar el blur del fondo
+            document.querySelectorAll('section, header, footer').forEach(element => {
+                element.classList.remove('blur-effect');
+            });
         }
 
         // Funciones para el modal de registro
@@ -859,6 +902,29 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Configuración global para SweetAlert2 con backdrop blur
+        const swalWithBlur = Swal.mixin({
+            backdrop: `
+                rgba(0,0,0,0.7)
+                url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFeAJ2gYRH4wAAAABJRU5ErkJggg==)
+            `,
+            customClass: {
+                container: 'swal-backdrop-blur'
+            },
+            didOpen: () => {
+                // Aplicar blur al fondo cuando se abre SweetAlert
+                document.querySelectorAll('section, header, footer').forEach(element => {
+                    element.classList.add('blur-effect');
+                });
+            },
+            didClose: () => {
+                // Quitar blur al fondo cuando se cierra SweetAlert
+                document.querySelectorAll('section, header, footer').forEach(element => {
+                    element.classList.remove('blur-effect');
+                });
+            }
+        });
+
         // Manejar el envío del formulario de registro
         async function handleRegistration(event) {
             event.preventDefault();
@@ -877,7 +943,7 @@
                     toggleMapSection();
                 }
                 
-                Swal.fire({
+                swalWithBlur.fire({
                     icon: 'warning',
                     title: 'Ubicación requerida',
                     text: 'Por favor selecciona la ubicación de tu negocio en el mapa',
@@ -887,7 +953,7 @@
             }
             
             // Mostrar loading
-            Swal.fire({
+            swalWithBlur.fire({
                 title: 'Registrando...',
                 text: 'Por favor espera un momento',
                 allowOutsideClick: false,
@@ -941,7 +1007,7 @@
                     }, 100);
 
                     // Mostrar mensaje de éxito
-                    Swal.fire({
+                    swalWithBlur.fire({
                         icon: 'success',
                         title: '¡Registro exitoso!',
                         html: `
@@ -957,7 +1023,7 @@
                     document.getElementById('ownerName').value = '';
                     document.getElementById('phone').value = '';
                 } else {
-                    Swal.fire({
+                    swalWithBlur.fire({
                         icon: 'error',
                         title: 'Error al registrar',
                         text: data.message,
@@ -965,7 +1031,7 @@
                     });
                 }
             } catch (error) {
-                Swal.fire({
+                swalWithBlur.fire({
                     icon: 'error',
                     title: 'Error de conexión',
                     text: 'No pudimos conectar con el servidor. Por favor, intenta de nuevo más tarde.',
