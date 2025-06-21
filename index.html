@@ -162,10 +162,8 @@
         
         /* Estilo para el efecto de blur */
         .blur-effect {
-            filter: blur(8px);
-            transition: filter 0.4s ease-in-out;
-            transform: scale(0.99);
-            opacity: 0.9;
+            filter: blur(5px);
+            transition: filter 0.3s ease;
         }
     </style>
 </head>
@@ -260,8 +258,8 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="py-16 md:py-24 px-4 md:px-10 bg-gradient-to-b from-green-100 to-green-100">
+      <!-- Hero Section -->
+     <section class="py-16 md:py-24 px-4 md:px-10 bg-gradient-to-b from-green-100 to-green-100">
         <div class="container">
             <!-- Slideshow container -->
             <div class="slideshow-container relative overflow-hidden rounded-xl shadow-2xl">
@@ -296,7 +294,7 @@
         </div>
     </section> 
 
-    <!-- Features Section -->
+     <!-- Features Section -->
     <section id="features" class="py-16 px-4 md:px-10 bg-gradient-to-br from-green-200 via-green-100 to-yellow-200">
         <div class="container">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Imágenes generadas por IA</h2>
@@ -783,11 +781,6 @@
             // Cerrar todos los modales primero
             closeAllModals();
             
-            // Aplicar blur al fondo
-            document.querySelectorAll('section, header, footer').forEach(element => {
-                element.classList.add('blur-effect');
-            });
-            
             // Abrir el modal específico
             const modal = document.getElementById(plan + 'PlanModal');
             modal.classList.remove('hidden');
@@ -798,13 +791,6 @@
             const modal = document.getElementById(plan + 'PlanModal');
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
-            
-            // Quitar el blur del fondo con un pequeño retraso para una transición suave
-            setTimeout(() => {
-                document.querySelectorAll('section, header, footer').forEach(element => {
-                    element.classList.remove('blur-effect');
-                });
-            }, 100);
         }
 
         // Funciones para el modal de registro
@@ -839,12 +825,10 @@
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
             
-            // Quitar el blur del fondo con un pequeño retraso para una transición suave
-            setTimeout(() => {
-                document.querySelectorAll('section, header, footer').forEach(element => {
-                    element.classList.remove('blur-effect');
-                });
-            }, 100);
+            // Quitar el blur del fondo
+            document.querySelectorAll('section, header, footer').forEach(element => {
+                element.classList.remove('blur-effect');
+            });
         }
         
         // Función para cerrar todos los modales
@@ -867,12 +851,10 @@
                 document.getElementById('modalVideoContainer').innerHTML = '';
             }
             
-            // Quitar el blur del fondo con un pequeño retraso para una transición suave
-            setTimeout(() => {
-                document.querySelectorAll('section, header, footer').forEach(element => {
-                    element.classList.remove('blur-effect');
-                });
-            }, 100);
+            // Quitar el blur del fondo
+            document.querySelectorAll('section, header, footer').forEach(element => {
+                element.classList.remove('blur-effect');
+            });
             
             document.body.style.overflow = 'auto';
         }
@@ -1114,7 +1096,7 @@
             // Verificar si el clic fue en el thumbnail (excluyendo el botón de play)
             else if (e.target.closest('.video-thumbnail') && !e.target.closest('.play-button')) {
                 console.log('Thumbnail de video clickeado (delegación de eventos)');
-                loadVideo();
+            loadVideo();
             }
         });
         
@@ -1144,9 +1126,9 @@
         function loadVideo() {
             console.log('Función loadVideo() ejecutada');
             try {
-                // Reemplaza este ID con el ID real de tu video de YouTube
-                const videoId = 'dQw4w9WgXcQ'; // Este es un ID de ejemplo (Rick Astley)
-                
+            // Reemplaza este ID con el ID real de tu video de YouTube
+            const videoId = 'dQw4w9WgXcQ'; // Este es un ID de ejemplo (Rick Astley)
+            
                 // Aplicar blur al fondo
                 document.querySelectorAll('section, header, footer').forEach(element => {
                     element.classList.add('blur-effect');
@@ -1178,16 +1160,16 @@
                 
                 // Insertar el iframe
                                     modalVideoContainer.innerHTML = `
-                        <iframe 
-                            width="100%" 
+                <iframe 
+                    width="100%" 
                             height="400" 
-                            src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen
-                            class="rounded-xl"
-                        ></iframe>
-                    `;
+                    src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    class="rounded-xl"
+                ></iframe>
+            `;
                 console.log('Iframe insertado en el modal');
                 
                 // Verificación final
@@ -1222,12 +1204,10 @@
                 videoModal.style.display = 'none';
                 document.body.style.overflow = 'auto'; // Restaurar scroll
                 
-                // Quitar el blur del fondo con un pequeño retraso para una transición suave
-                setTimeout(() => {
-                    document.querySelectorAll('section, header, footer').forEach(element => {
-                        element.classList.remove('blur-effect');
-                    });
-                }, 100);
+                // Quitar el blur del fondo
+                document.querySelectorAll('section, header, footer').forEach(element => {
+                    element.classList.remove('blur-effect');
+                });
                 console.log('Modal de video ocultado, clases actuales:', videoModal.className);
                 
                 // Limpiar el contenido del video para detener la reproducción
