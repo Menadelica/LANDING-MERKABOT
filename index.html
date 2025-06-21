@@ -250,6 +250,50 @@
         .swal2-confirm:hover, .swal2-cancel:hover {
             transform: scale(1.05) !important;
         }
+        
+        /* Estilos responsivos para móviles */
+        @media (max-width: 767px) {
+            /* Centrar botones en móviles */
+            button, .button {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            /* Centrar iconos y títulos en las tarjetas de beneficios */
+            #features .bg-white .text-4xl {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            #features .bg-white h3 {
+                text-align: center;
+            }
+            
+            /* Justificar texto en párrafos */
+            #features .bg-white p {
+                text-align: justify;
+            }
+            
+            /* Centrar contenido de las tarjetas de planes */
+            #features .border-green-500 .text-4xl,
+            #features .border-yellow-400 .text-4xl {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            #features .border-green-500 h3,
+            #features .border-yellow-400 h3 {
+                text-align: center;
+            }
+            
+            #features .border-green-500 p,
+            #features .border-yellow-400 p {
+                text-align: justify;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -362,15 +406,7 @@
     </section>
 
     <!-- Separador con círculos decorativos -->
-    <div class="relative py-4 bg-gradient-to-r from-green-100 to-yellow-100">
-        <div class="container mx-auto flex justify-center items-center">
-            <div class="w-4 h-4 rounded-full bg-green-500 mx-1 animate-pulse"></div>
-            <div class="w-6 h-6 rounded-full bg-yellow-400 mx-1 animate-pulse" style="animation-delay: 0.2s"></div>
-            <div class="w-8 h-8 rounded-full bg-orange-500 mx-1 animate-pulse" style="animation-delay: 0.4s"></div>
-            <div class="w-6 h-6 rounded-full bg-yellow-400 mx-1 animate-pulse" style="animation-delay: 0.6s"></div>
-            <div class="w-4 h-4 rounded-full bg-green-500 mx-1 animate-pulse" style="animation-delay: 0.8s"></div>
-        </div>
-    </div>
+
 
       <!-- Hero Section -->
     
