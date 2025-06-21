@@ -12,6 +12,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Canvas Confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuR8I7PzVdgltiPeg0T7V2FHJ3vsswbHI&libraries=places"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
@@ -25,6 +27,26 @@
             position: fixed !important;
             z-index: 9999 !important;
             pointer-events: none;
+        }
+        
+        /* Estilos para el mapa */
+        #map {
+            height: 300px;
+            width: 100%;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .map-container {
+            position: relative;
+        }
+        
+        .location-info {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
         }
         
         .floating-btn {
@@ -537,6 +559,53 @@
                            title="Por favor ingresa exactamente 10 dígitos numéricos">
                     <p class="text-sm text-gray-500 mt-1">Ingresa exactamente 10 dígitos sin espacios ni caracteres especiales</p>
                 </div>
+
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-gray-700">Ubicación del Negocio</label>
+                        <button type="button" 
+                                id="toggleMap" 
+                                class="text-sm flex items-center text-green-600 hover:text-green-800 transition"
+                                onclick="toggleMapSection()">
+                            <span id="toggleMapText">Mostrar mapa</span>
+                            <i id="toggleMapIcon" class="fas fa-chevron-down ml-1"></i>
+                        </button>
+                    </div>
+                    
+                    <div id="mapSection" class="hidden">
+                        <div class="map-container">
+                            <div id="map"></div>
+                            <div class="location-info">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-search-location text-green-500 mr-2"></i>
+                                    <input type="text" id="searchLocation" placeholder="Buscar ubicación..." 
+                                           class="w-full px-3 py-1 border border-gray-300 rounded-lg text-sm">
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div>
+                                        <label for="lat" class="text-xs text-gray-600">Latitud:</label>
+                                        <input type="text" id="lat" name="latitude" readonly
+                                               class="w-full px-2 py-1 border border-gray-200 rounded-lg text-sm bg-gray-50">
+                                    </div>
+                                    <div>
+                                        <label for="lng" class="text-xs text-gray-600">Longitud:</label>
+                                        <input type="text" id="lng" name="longitude" readonly
+                                               class="w-full px-2 py-1 border border-gray-200 rounded-lg text-sm bg-gray-50">
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-2">
+                                    <i class="fas fa-info-circle mr-1"></i> 
+                                    Haz clic en el mapa para seleccionar la ubicación exacta de tu negocio
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="locationSummary" class="flex items-center p-2 border border-gray-300 rounded-lg bg-gray-50">
+                        <i class="fas fa-map-marker-alt text-green-500 mr-2"></i>
+                        <span id="locationText" class="text-sm text-gray-600">Sin ubicación seleccionada</span>
+                    </div>
+                </div>
                 
                 <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition mt-6">
                     Registrar Negocio
@@ -554,8 +623,120 @@
         showSlides(slideIndex);
         startAutoSlide();
 
+        // Variables para el mapa
+        let map;
+        let marker;
+        let searchBox;
+
+        // Inicializar el mapa cuando se abre el modal de registro
+        function initMap() {
+            // Coordenadas iniciales (México)
+            const initialPosition = { lat: 19.4326, lng: -99.1332 };
+            
+            // Crear el mapa
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: initialPosition,
+                zoom: 13,
+                mapTypeControl: false,
+                streetViewControl: false,
+                fullscreenControl: false
+            });
+            
+            // Crear el marcador inicial
+            marker = new google.maps.Marker({
+                position: initialPosition,
+                map: map,
+                draggable: true,
+                animation: google.maps.Animation.DROP
+            });
+            
+            // Actualizar coordenadas cuando se arrastra el marcador
+            google.maps.event.addListener(marker, 'dragend', function() {
+                updateCoordinates(marker.getPosition());
+                // Obtener dirección para el resumen
+                getAddressFromCoordinates(marker.getPosition());
+            });
+            
+            // Actualizar coordenadas cuando se hace clic en el mapa
+            google.maps.event.addListener(map, 'click', function(event) {
+                marker.setPosition(event.latLng);
+                updateCoordinates(event.latLng);
+                // Obtener dirección para el resumen
+                getAddressFromCoordinates(event.latLng);
+            });
+            
+            // Inicializar el cuadro de búsqueda
+            const searchInput = document.getElementById('searchLocation');
+            searchBox = new google.maps.places.SearchBox(searchInput);
+            
+            // Actualizar el mapa cuando se selecciona un lugar
+            searchBox.addListener('places_changed', function() {
+                const places = searchBox.getPlaces();
+                
+                if (places.length === 0) {
+                    return;
+                }
+                
+                const bounds = new google.maps.LatLngBounds();
+                
+                places.forEach(function(place) {
+                    if (!place.geometry || !place.geometry.location) {
+                        console.log("Lugar sin geometría");
+                        return;
+                    }
+                    
+                    // Actualizar el marcador
+                    marker.setPosition(place.geometry.location);
+                    updateCoordinates(place.geometry.location);
+                    
+                    // Actualizar el resumen con el nombre del lugar
+                    document.getElementById('locationText').textContent = place.name;
+                    
+                    if (place.geometry.viewport) {
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                
+                map.fitBounds(bounds);
+            });
+            
+            // Establecer valores iniciales
+            updateCoordinates(initialPosition);
+            getAddressFromCoordinates(initialPosition);
+        }
+        
+        // Función para actualizar las coordenadas en los campos
+        function updateCoordinates(position) {
+            document.getElementById('lat').value = position.lat().toFixed(6);
+            document.getElementById('lng').value = position.lng().toFixed(6);
+        }
+        
+        // Función para obtener la dirección a partir de coordenadas
+        function getAddressFromCoordinates(position) {
+            const geocoder = new google.maps.Geocoder();
+            
+            geocoder.geocode({ 'location': position }, function(results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        document.getElementById('locationText').textContent = results[0].formatted_address;
+                    } else {
+                        document.getElementById('locationText').textContent = 'Ubicación seleccionada';
+                    }
+                } else {
+                    document.getElementById('locationText').textContent = 
+                        `Lat: ${position.lat().toFixed(4)}, Lng: ${position.lng().toFixed(4)}`;
+                }
+            });
+        }
+
         // Funciones para los modales de planes
         function openPlanModal(plan) {
+            // Cerrar todos los modales primero
+            closeAllModals();
+            
+            // Abrir el modal específico
             const modal = document.getElementById(plan + 'PlanModal');
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
@@ -569,14 +750,46 @@
 
         // Funciones para el modal de registro
         function openRegistrationModal() {
+            // Cerrar todos los modales primero
+            closeAllModals();
+            
+            // Abrir el modal de registro
             const modal = document.getElementById('registrationModal');
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+            
+            // Inicializar el mapa después de que el modal esté visible
+            setTimeout(() => {
+                // Inicializar el mapa aunque esté oculto
+                initMap();
+                
+                // Asegurar que el mapa se renderice correctamente cuando se muestre
+                google.maps.event.addListenerOnce(map, 'idle', function() {
+                    google.maps.event.trigger(map, 'resize');
+                });
+            }, 300);
         }
 
         function closeRegistrationModal() {
             const modal = document.getElementById('registrationModal');
             modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Función para cerrar todos los modales
+        function closeAllModals() {
+            const modals = [
+                document.getElementById('basicPlanModal'),
+                document.getElementById('premiumPlanModal'),
+                document.getElementById('registrationModal')
+            ];
+            
+            modals.forEach(modal => {
+                if (modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+            
             document.body.style.overflow = 'auto';
         }
 
@@ -587,6 +800,25 @@
             const businessName = document.getElementById('businessName').value;
             const ownerName = document.getElementById('ownerName').value;
             const phone = document.getElementById('phone').value;
+            const latitude = document.getElementById('lat').value;
+            const longitude = document.getElementById('lng').value;
+            
+            // Validar que se haya seleccionado una ubicación
+            if (!latitude || !longitude) {
+                // Mostrar el mapa si está oculto
+                const mapSection = document.getElementById('mapSection');
+                if (mapSection.classList.contains('hidden')) {
+                    toggleMapSection();
+                }
+                
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Ubicación requerida',
+                    text: 'Por favor selecciona la ubicación de tu negocio en el mapa',
+                    confirmButtonColor: '#10B981'
+                });
+                return;
+            }
             
             // Mostrar loading
             Swal.fire({
@@ -608,7 +840,9 @@
                     body: JSON.stringify({
                         businessName,
                         ownerName,
-                        phone
+                        phone,
+                        latitude,
+                        longitude
                     })
                 });
 
@@ -685,8 +919,7 @@
             
             modals.forEach(modal => {
                 if (event.target === modal) {
-                    modal.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
+                    closeAllModals();
                 }
             });
         }
@@ -793,6 +1026,35 @@
                     class="rounded-xl"
                 ></iframe>
             `;
+        }
+
+        // Map functionality
+        function toggleMapSection() {
+            const mapSection = document.getElementById('mapSection');
+            const toggleMapText = document.getElementById('toggleMapText');
+            const toggleMapIcon = document.getElementById('toggleMapIcon');
+            
+            if (mapSection.classList.contains('hidden')) {
+                mapSection.classList.remove('hidden');
+                toggleMapText.textContent = 'Ocultar mapa';
+                toggleMapIcon.classList.remove('fa-chevron-down');
+                toggleMapIcon.classList.add('fa-chevron-up');
+                
+                // Asegurar que el mapa se renderice correctamente cuando se muestra
+                setTimeout(() => {
+                    if (map) {
+                        google.maps.event.trigger(map, 'resize');
+                        if (marker) {
+                            map.setCenter(marker.getPosition());
+                        }
+                    }
+                }, 100);
+            } else {
+                mapSection.classList.add('hidden');
+                toggleMapText.textContent = 'Mostrar mapa';
+                toggleMapIcon.classList.remove('fa-chevron-up');
+                toggleMapIcon.classList.add('fa-chevron-down');
+            }
         }
     </script>
 </body>

@@ -13,12 +13,14 @@ try {
     $data = json_decode(file_get_contents('php://input'), true);
 
     // Preparar la consulta SQL
-    $stmt = $conn->prepare("INSERT INTO registro (nombre, celular, nombre_negocio) VALUES (:nombre, :celular, :nombre_negocio)");
+    $stmt = $conn->prepare("INSERT INTO registro (nombre, celular, nombre_negocio, latitud, longitud) VALUES (:nombre, :celular, :nombre_negocio, :latitud, :longitud)");
 
     // Vincular los parámetros
     $stmt->bindParam(':nombre', $data['ownerName']);
     $stmt->bindParam(':celular', $data['phone']);
     $stmt->bindParam(':nombre_negocio', $data['businessName']);
+    $stmt->bindParam(':latitud', $data['latitude']);
+    $stmt->bindParam(':longitud', $data['longitude']);
 
     // Ejecutar la consulta
     $stmt->execute();
