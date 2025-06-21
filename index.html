@@ -521,9 +521,9 @@
     </div>
 
     <!-- Modal de Video -->
-    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-80 items-center justify-center z-50 hidden" style="display: none !important;">
-        <div class="relative w-full max-w-4xl mx-4">
-            <button onclick="closeVideoModal()" class="absolute -top-10 right-0 text-white text-2xl hover:text-gray-300 transition">
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden" style="display: none !important;">
+        <div class="relative w-full max-w-2xl mx-auto px-4 py-10">
+            <button onclick="closeVideoModal()" class="absolute -top-8 right-4 text-white text-xl hover:text-gray-300 transition">
                 <i class="fas fa-times"></i>
             </button>
             <div id="modalVideoContainer" class="w-full rounded-xl overflow-hidden shadow-2xl">
@@ -1159,8 +1159,10 @@
                     throw new Error('No se encontró el modal de video en el DOM');
                 }
                 
-                // Asegurarse de que el modal esté visible
+                // Asegurarse de que el modal esté visible y centrado
                 videoModal.style.display = 'flex';
+                videoModal.style.alignItems = 'center';
+                videoModal.style.justifyContent = 'center';
                 videoModal.classList.remove('hidden');
                 document.body.style.overflow = 'hidden'; // Prevenir scroll
                 console.log('Modal de video mostrado, clases actuales:', videoModal.className);
@@ -1174,17 +1176,17 @@
                 }
                 
                 // Insertar el iframe
-                modalVideoContainer.innerHTML = `
-                    <iframe 
-                        width="100%" 
-                        height="600" 
-                        src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen
-                        class="rounded-xl"
-                    ></iframe>
-                `;
+                                    modalVideoContainer.innerHTML = `
+                        <iframe 
+                            width="100%" 
+                            height="400" 
+                            src="https://www.youtube.com/embed/${videoId}?autoplay=1" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            class="rounded-xl"
+                        ></iframe>
+                    `;
                 console.log('Iframe insertado en el modal');
                 
                 // Verificación final
