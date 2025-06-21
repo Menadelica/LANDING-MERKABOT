@@ -623,7 +623,7 @@
     </div>
 
     <!-- Modal de Video -->
-    <div id="videoModal" class="fixed inset-0 modal-backdrop z-50 hidden">
+    <div id="videoModal" class="fixed inset-0 modal-backdrop z-50 hidden" onclick="handleVideoModalClick(event)">
         <div class="relative w-full max-w-2xl mx-auto px-4 py-10">
             <button onclick="closeVideoModal()" class="absolute -top-8 right-4 text-white text-xl hover:text-gray-300 transition">
                 <i class="fas fa-times"></i>
@@ -1297,6 +1297,14 @@
             }
         }
         
+        // Función para manejar clics en el modal de video
+        function handleVideoModalClick(event) {
+            // Si el clic fue directamente en el fondo del modal (no en su contenido)
+            if (event.target.id === 'videoModal') {
+                closeVideoModal();
+            }
+        }
+
         function closeVideoModal() {
             console.log('Función closeVideoModal() ejecutada');
             try {
