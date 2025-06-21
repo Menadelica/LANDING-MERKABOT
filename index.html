@@ -162,8 +162,10 @@
         
         /* Estilo para el efecto de blur */
         .blur-effect {
-            filter: blur(5px);
-            transition: filter 0.3s ease;
+            filter: blur(8px);
+            transition: filter 0.4s ease-in-out;
+            transform: scale(0.99);
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -781,6 +783,11 @@
             // Cerrar todos los modales primero
             closeAllModals();
             
+            // Aplicar blur al fondo
+            document.querySelectorAll('section, header, footer').forEach(element => {
+                element.classList.add('blur-effect');
+            });
+            
             // Abrir el modal específico
             const modal = document.getElementById(plan + 'PlanModal');
             modal.classList.remove('hidden');
@@ -791,6 +798,13 @@
             const modal = document.getElementById(plan + 'PlanModal');
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
+            
+            // Quitar el blur del fondo con un pequeño retraso para una transición suave
+            setTimeout(() => {
+                document.querySelectorAll('section, header, footer').forEach(element => {
+                    element.classList.remove('blur-effect');
+                });
+            }, 100);
         }
 
         // Funciones para el modal de registro
@@ -825,10 +839,12 @@
             modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
             
-            // Quitar el blur del fondo
-            document.querySelectorAll('section, header, footer').forEach(element => {
-                element.classList.remove('blur-effect');
-            });
+            // Quitar el blur del fondo con un pequeño retraso para una transición suave
+            setTimeout(() => {
+                document.querySelectorAll('section, header, footer').forEach(element => {
+                    element.classList.remove('blur-effect');
+                });
+            }, 100);
         }
         
         // Función para cerrar todos los modales
@@ -851,10 +867,12 @@
                 document.getElementById('modalVideoContainer').innerHTML = '';
             }
             
-            // Quitar el blur del fondo
-            document.querySelectorAll('section, header, footer').forEach(element => {
-                element.classList.remove('blur-effect');
-            });
+            // Quitar el blur del fondo con un pequeño retraso para una transición suave
+            setTimeout(() => {
+                document.querySelectorAll('section, header, footer').forEach(element => {
+                    element.classList.remove('blur-effect');
+                });
+            }, 100);
             
             document.body.style.overflow = 'auto';
         }
@@ -1204,10 +1222,12 @@
                 videoModal.style.display = 'none';
                 document.body.style.overflow = 'auto'; // Restaurar scroll
                 
-                // Quitar el blur del fondo
-                document.querySelectorAll('section, header, footer').forEach(element => {
-                    element.classList.remove('blur-effect');
-                });
+                // Quitar el blur del fondo con un pequeño retraso para una transición suave
+                setTimeout(() => {
+                    document.querySelectorAll('section, header, footer').forEach(element => {
+                        element.classList.remove('blur-effect');
+                    });
+                }, 100);
                 console.log('Modal de video ocultado, clases actuales:', videoModal.className);
                 
                 // Limpiar el contenido del video para detener la reproducción
