@@ -170,9 +170,9 @@
                 <h1 class="text-xl md:text-2xl font-bold text-yellow-400 ml-2" style="font-family: 'RocherFont', sans-serif; color: #facc15 !important;">MERKABOT</h1>
             </div>
             <nav class="hidden md:block">
-                <a href="https://www.google.com" target="_blank" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105">
+                <button onclick="openRegistrationModal()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105">
                     Ingresar
-                </a>
+                </button>
             </nav>
             <button class="md:hidden text-white text-xl">
                 <i class="fas fa-bars"></i>
@@ -233,7 +233,7 @@
                         </div>
                     </div>
                     
-                    <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition duration-300">
+                    <button onclick="loadVideo()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition duration-300">
                         Ver demostración
                     </button>
                 </div>
@@ -377,7 +377,7 @@
         <div class="container mx-auto text-center">
             <h2 class="text-3xl font-bold text-white mb-6">¿Listo para transformar tu experiencia de compra?</h2>
             <p class="text-white mb-8 text-lg">Únete a miles de usuarios satisfechos que ya compran de manera inteligente.</p>
-            <button class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-10 rounded-full text-lg transition duration-300 transform hover:scale-105">
+            <button onclick="openRegistrationModal()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-10 rounded-full text-lg transition duration-300 transform hover:scale-105">
                 Comenzar ahora
             </button>
         </div>
@@ -490,14 +490,15 @@
     </div>
 
     <!-- Modal de Registro -->
-    <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-800">Registro de Negocio</h3>
-                <button onclick="closeRegistrationModal()" class="text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
+    <div id="registrationModal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden" style="display: none !important;">
+        <div class="flex items-center justify-center min-h-screen px-4 py-6">
+            <div class="bg-white rounded-xl p-8 max-w-md w-full mx-auto shadow-2xl">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Registro de Negocio</h3>
+                    <button onclick="closeRegistrationModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
             
             <form class="space-y-4" onsubmit="handleRegistration(event)">
                 <div>
@@ -579,6 +580,7 @@
                     Registrar Negocio
                 </button>
             </form>
+            </div>
         </div>
     </div>
 
@@ -789,30 +791,56 @@
 
         // Funciones para el modal de registro
         function openRegistrationModal() {
+            console.log('Abriendo modal de registro');
             // Cerrar todos los modales primero
             closeAllModals();
             
             // Abrir el modal de registro
-            const modal = document.getElementById('registrationModal');
+            const modal = document.querySelector('#registrationModal');
+            if (!modal) {
+                console.error('No se encontró el modal de registro');
+                return;
+            }
+            
             modal.classList.remove('hidden');
+            modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            console.log('Modal de registro abierto');
             
             // Inicializar el mapa después de que el modal esté visible
             setTimeout(() => {
-                // Inicializar el mapa aunque esté oculto
-                initMap();
-                
-                // Asegurar que el mapa se renderice correctamente cuando se muestre
-                google.maps.event.addListenerOnce(map, 'idle', function() {
-                    google.maps.event.trigger(map, 'resize');
-                });
+                try {
+                    // Inicializar el mapa aunque esté oculto
+                    initMap();
+                    
+                    // Asegurar que el mapa se renderice correctamente cuando se muestre
+                    if (typeof google !== 'undefined' && google.maps && map) {
+                        google.maps.event.addListenerOnce(map, 'idle', function() {
+                            google.maps.event.trigger(map, 'resize');
+                        });
+                        console.log('Mapa inicializado correctamente');
+                    } else {
+                        console.warn('Google Maps no está disponible o el mapa no se ha inicializado');
+                    }
+                } catch (error) {
+                    console.error('Error al inicializar el mapa:', error);
+                }
             }, 300);
         }
 
         function closeRegistrationModal() {
-            const modal = document.getElementById('registrationModal');
+            console.log('Cerrando modal de registro');
+            const modal = document.querySelector('#registrationModal');
+            
+            if (!modal) {
+                console.error('No se encontró el modal de registro para cerrarlo');
+                return;
+            }
+            
             modal.classList.add('hidden');
+            modal.style.display = 'none';
             document.body.style.overflow = 'auto';
+            console.log('Modal de registro cerrado');
         }
         
         // Función para cerrar todos los modales
